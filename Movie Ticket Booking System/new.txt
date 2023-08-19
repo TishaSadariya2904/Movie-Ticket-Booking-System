@@ -1,0 +1,47 @@
+public function collection(collection $rows)
+{
+	for($i=1;$i< count($rows);$i++)
+	{
+		$student=new student();
+		$student->name=$rows[$i][0];
+		$student->email=$rows[$i][1];
+		$student->image=$rows[$i][2];
+		$student->save();
+	}
+}
+//in student controller
+
+public function bulkUpload(Request $request)
+{
+	return $request;
+}
+
+public function bulkuplod(Request $request){
+		Excel::import(new studetImport(), $request->file
+		('uplodefile'));
+		
+	}
+	
+######################################################################################################################
+studentController:
+	Route copy
+		name uplode-->downlode
+		
+	public function downlode{
+
+	}
+
+index.blade.php 
+cmd:
+	php artisan make:export studentExport --model=student
+	
+app/export/studentcontroller:
+	use App\Exports\studentExport;
+	
+	public function downlode{
+		return Excel::downlode(new studetExport(),
+		'student.xlsx');
+	}
+
+web.php
+	Route::post('downlode',[studentController::class,'downlode'])->name('downlode');
